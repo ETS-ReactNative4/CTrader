@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810501887045",
+    "project_id": "ctrader-app-aa8c3",
+    "storage_bucket": "ctrader-app-aa8c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810501887045:android:d30e72cf6cc327c9303f2c",
+        "android_client_info": {
+          "package_name": "com.ctraderapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810501887045-80r4nq8oh7kqkta8fjfsnpo9gp5ktp2m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPVRH93XWTlW7yM1Xv40RAq4NL98b2xoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810501887045-80r4nq8oh7kqkta8fjfsnpo9gp5ktp2m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
