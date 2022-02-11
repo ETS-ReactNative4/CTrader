@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, Image, StatusBar, TouchableOpacity} from 'react-native';
 import Styles from '../../components/user_components/UserStyleComponent';
+import {AuthContext} from '../../navigation/user_navigations/AuthProvider';
 const HomeScreen = ({navigation}) => {
+  const {user} = useContext(AuthContext);
   return (
     <View style={Styles.Container1}>
       <StatusBar
@@ -24,7 +26,8 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View style={Styles.HomeHeaderMiddle}>
         <View>
-          <Text style={Styles.HomeText1}>Hello John,</Text>
+          <Text style={Styles.HomeText1}>Hello Jessica, </Text>
+          {/* <Text style={Styles.HomeText2}>{user.uid}</Text> */}
           <Text style={Styles.HomeText2}>
             Do you want to know you GHG emissons?
           </Text>

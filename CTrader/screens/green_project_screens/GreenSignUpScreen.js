@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TextInput,
   ScrollView,
   StatusBar,
+  Alert,
 } from 'react-native';
 import Styles from '../../components/green_project_components/ProjectStyleComponent';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -15,7 +16,37 @@ import FontAwesome5Icons from 'react-native-vector-icons/FontAwesome5';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {AuthContext} from '../../navigation/green_project_navigations/AuthProvider';
 const GreenSignUpScreen = ({navigation}) => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [secureTextEntry1, setSecureTextEntry1] = useState(true);
+  const [secureTextEntry2, setSecureTextEntry2] = useState(true);
+
+  const {register} = useContext(AuthContext);
+
+  const showPassword1 = () => {
+    setSecureTextEntry1(!secureTextEntry1);
+  };
+
+  const showPassword2 = () => {
+    setSecureTextEntry2(!secureTextEntry2);
+  };
+
+  const signinCheck = () => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!email && !password) {
+      Alert.alert('Please Enter your Email & Password before SignIn.');
+    } else if (reg.test(email) === false) {
+      Alert.alert('Please Enter Vaild Email Address..!');
+    } else if (password != confirmPassword) {
+      Alert.alert('Your Confirm Password is not match to the Password.');
+    } else {
+      register(email, password);
+    }
+  };
+
   return (
     <View style={Styles.Container1}>
       <StatusBar
@@ -51,7 +82,7 @@ const GreenSignUpScreen = ({navigation}) => {
             Please enter your organization and green project details.
           </Text>
           <View style={Styles.InputContainer}>
-            <View style={Styles.Input}>
+            {/* <View style={Styles.Input}>
               <FontAwesome5Icons name="industry" size={20} color="#009e60" />
               <TextInput
                 style={Styles.InputField}
@@ -66,16 +97,20 @@ const GreenSignUpScreen = ({navigation}) => {
                 placeholderTextColor="#009e60"
                 placeholder="Owner's Name"
               />
-            </View>
+            </View> */}
             <View style={Styles.Input}>
               <EntypoIcons name="email" size={20} color="#009e60" />
               <TextInput
                 style={Styles.InputField}
                 placeholderTextColor="#009e60"
                 placeholder="Email"
+                value={email}
+                onChangeText={userEmail => setEmail(userEmail)}
+                autoCapitalize="none"
+                autoCorrect={false}
               />
             </View>
-            <View style={Styles.Input}>
+            {/* <View style={Styles.Input}>
               <FontAwesome5Icons name="envelope" size={20} color="#009e60" />
               <TextInput
                 style={Styles.InputField}
@@ -115,15 +150,24 @@ const GreenSignUpScreen = ({navigation}) => {
                 placeholderTextColor="#009e60"
                 placeholder="Project Description"
               />
-            </View>
+            </View> */}
             <View style={Styles.Input}>
               <SimpleLineIcons name="lock-open" size={20} color="#009e60" />
               <TextInput
                 style={Styles.InputField}
                 placeholderTextColor="#009e60"
                 placeholder="Password"
+                value={password}
+                onChangeText={userPassword => setPassword(userPassword)}
+                secureTextEntry={secureTextEntry1}
               />
-              <IoniconsIcons name="eye-off" size={20} color="#009e60" />
+              <TouchableOpacity onPress={() => showPassword1()}>
+                {secureTextEntry1 == true ? (
+                  <IoniconsIcons name="eye-off" size={20} color="#009e60" />
+                ) : (
+                  <IoniconsIcons name="eye" size={20} color="#009e60" />
+                )}
+              </TouchableOpacity>
             </View>
             <View style={Styles.Input}>
               <SimpleLineIcons name="lock-open" size={20} color="#009e60" />
@@ -131,16 +175,25 @@ const GreenSignUpScreen = ({navigation}) => {
                 style={Styles.InputField}
                 placeholderTextColor="#009e60"
                 placeholder="Confirm Password"
+                value={confirmPassword}
+                onChangeText={userConfirmPassword =>
+                  setConfirmPassword(userConfirmPassword)
+                }
+                secureTextEntry={secureTextEntry2}
               />
-              <IoniconsIcons name="eye-off" size={20} color="#009e60" />
+              <TouchableOpacity onPress={() => showPassword2()}>
+                {secureTextEntry2 == true ? (
+                  <IoniconsIcons name="eye-off" size={20} color="#009e60" />
+                ) : (
+                  <IoniconsIcons name="eye" size={20} color="#009e60" />
+                )}
+              </TouchableOpacity>
             </View>
           </View>
         </View>
       </ScrollView>
       <View style={Styles.ButtonContain}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('LoginScreen')}
-          style={Styles.Button}>
+        <TouchableOpacity onPress={() => signinCheck()} style={Styles.Button}>
           <Text style={Styles.ButtonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>

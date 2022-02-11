@@ -1,10 +1,14 @@
 import React from 'react';
+import {LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import LandingScreen from './screens/LandingScreen';
-import UserStackNavigation from './navigation/user_navigations/UserStackNavigation';
-import GreenProjectStackNavigation from './navigation/green_project_navigations/GreenProjectStackNavigation';
+import UserProvider from './navigation/user_navigations';
+import GreenProjectProvider from './navigation/green_project_navigations';
+
+LogBox.ignoreLogs(['new NativeEventEmitter']);
+LogBox.ignoreAllLogs();
 
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -16,10 +20,10 @@ const App = () => {
         }}
         initialRouteName="LandingScreen">
         <Stack.Screen name="LandingScreen" component={LandingScreen} />
-        <Stack.Screen name="UserLoginScreen" component={UserStackNavigation} />
+        <Stack.Screen name="UserLoginScreen" component={UserProvider} />
         <Stack.Screen
           name="GreenProjectLoginScreen"
-          component={GreenProjectStackNavigation}
+          component={GreenProjectProvider}
         />
       </Stack.Navigator>
     </NavigationContainer>

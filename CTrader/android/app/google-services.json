@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "810501887045",
-    "project_id": "ctrader-app-aa8c3",
-    "storage_bucket": "ctrader-app-aa8c3.appspot.com"
+    "project_number": "349214055245",
+    "project_id": "ctrader-3685e",
+    "storage_bucket": "ctrader-3685e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:810501887045:android:d30e72cf6cc327c9303f2c",
+        "mobilesdk_app_id": "1:349214055245:android:259e916781a3a3062bf504",
         "android_client_info": {
-          "package_name": "com.ctraderapp"
+          "package_name": "com.ctrader"
         }
       },
       "oauth_client": [
         {
-          "client_id": "810501887045-80r4nq8oh7kqkta8fjfsnpo9gp5ktp2m.apps.googleusercontent.com",
+          "client_id": "349214055245-4s9ulogjibrntohdmdmagi6bm3havad8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDPVRH93XWTlW7yM1Xv40RAq4NL98b2xoQ"
+          "current_key": "AIzaSyAXXWL-GnNNnPFEZT2PjW7j7zmlUpCQG2M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "810501887045-80r4nq8oh7kqkta8fjfsnpo9gp5ktp2m.apps.googleusercontent.com",
+              "client_id": "349214055245-4s9ulogjibrntohdmdmagi6bm3havad8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

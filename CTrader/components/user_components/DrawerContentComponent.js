@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 
@@ -8,8 +8,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontistoIcons from 'react-native-vector-icons/Fontisto';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
+import {AuthContext} from '../../navigation/user_navigations/AuthProvider';
 
 const DrawerContentComponent = props => {
+  const {logout} = useContext(AuthContext);
+
   return (
     <View style={Styles.Container}>
       <DrawerContentScrollView {...props}>
@@ -98,9 +101,7 @@ const DrawerContentComponent = props => {
           )}
           label="Sign Out"
           labelStyle={Styles.DrawerText}
-          onPress={() => {
-            props.navigation.navigate('LoginScreen');
-          }}
+          onPress={() => logout()}
         />
       </View>
     </View>

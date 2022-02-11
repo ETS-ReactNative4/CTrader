@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, StatusBar, Image} from 'react-native';
 import GreenHeaderComponent from '../../components/green_project_components/GreenHeaderComponent';
 import Styles from '../../components/green_project_components/ProjectStyleComponent';
+import {AuthContext} from '../../navigation/green_project_navigations/AuthProvider';
 const GreenHomeScreen = ({navigation}) => {
+  const {user} = useContext(AuthContext);
   return (
     <View style={Styles.Container1}>
       <StatusBar
@@ -13,7 +15,7 @@ const GreenHomeScreen = ({navigation}) => {
       />
       <GreenHeaderComponent Navigation={navigation} />
       <View style={Styles.HomeUserName}>
-        <Text style={Styles.HomeText1}>Hello Jesika,</Text>
+        <Text style={Styles.HomeText1}>Hello {user.id},</Text>
         <Text style={Styles.HomeText2}>
           Do you want to know your current status?
         </Text>

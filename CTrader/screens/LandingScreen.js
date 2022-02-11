@@ -35,9 +35,9 @@ const LandingScreen = ({navigation}) => {
       <View style={Styles.LandingBackground}>
         <View style={Styles.LandingDescription}>
           <Text style={Styles.DescriptionText}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-            facere, corrupti fugiat error deleniti quae esse doloribus assumenda
-            aliquid magni aspernatur consequuntur.
+            If you are a user, You can buy the carbon credits according to your
+            vehicle's GHG emissions through this app. And also, If you are a
+            company, You can sell the carbon credits.
           </Text>
         </View>
         <View style={Styles.LandingButtonContain}>
