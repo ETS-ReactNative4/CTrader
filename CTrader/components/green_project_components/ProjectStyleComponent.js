@@ -63,14 +63,39 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
+    marginBottom: 10,
+    width: width / 1.15,
+  },
+  InputMulti: {
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,158,96,0.2)',
+    padding: 5,
     marginBottom: 15,
-    width: width / 1.1,
+    width: width / 1.15,
+    height: width * 0.48,
+  },
+  InputMultiBack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   InputField: {
     width: width / 1.5,
     marginLeft: 15,
     fontSize: 18,
     fontFamily: 'NunitoSans-Regular',
+  },
+  InputFieldMulti: {
+    width: width / 1.5,
+    marginLeft: 15,
+    fontSize: 18,
+    fontFamily: 'NunitoSans-Regular',
+  },
+  InputContainerSignUp: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 3,
+    paddingRight: 3,
   },
   Bottom: {
     flexDirection: 'row',
@@ -116,6 +141,16 @@ const Styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'NunitoSans-Regular',
     marginBottom: 20,
+  },
+  ScrollDotsContain: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: -5,
+  },
+  ScrollDot: {
+    height: 10,
+    borderRadius: 50,
+    margin: 5,
   },
   //GreenSignUp, GreenLogin Styles
   //Wating Screen Styles
@@ -438,6 +473,34 @@ const Styles = StyleSheet.create({
     textAlign: 'center',
     padding: 20,
     color: '#5e5e5e',
+  },
+  AddProjectlInfoBack: {
+    width: width * 0.85,
+    height: height * 0.35,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  ActionButton: {
+    paddingLeft: 325,
+    paddingTop: 305,
+  },
+  ActionButton1: {
+    paddingLeft: 400,
+    paddingTop: 280,
+  },
+  ActionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
+  AddPersonalInfoIndicator: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ProjText1: {
+    fontSize: 18,
+    fontFamily: 'NunitoSans-Regular',
+    paddingBottom: 20,
   },
   //Update Project Image Screen Styles
 });

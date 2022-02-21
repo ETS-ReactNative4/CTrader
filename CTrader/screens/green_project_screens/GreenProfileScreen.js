@@ -1,9 +1,32 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, StatusBar, Image, TouchableOpacity} from 'react-native';
 import GreenHeaderComponent from '../../components/green_project_components/GreenHeaderComponent';
 import Styles from '../../components/green_project_components/ProjectStyleComponent';
 
+import {AuthContext} from '../../navigation/green_project_navigations/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
+
 const GreenProfileScreen = ({navigation}) => {
+  const {user} = useContext(AuthContext);
+  const [email, setEmail] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [ownerName, setOwnerName] = useState('');
+  const [address, setAddress] = useState('');
+
+  firestore()
+    .collection('green_projects')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        var userdata = documentSnapshot.data();
+        setCompanyName(userdata.companyName);
+        setOwnerName(userdata.ownerName);
+        setEmail(userdata.email);
+        setAddress(userdata.address);
+      }
+    });
+
   return (
     <View style={Styles.Container1}>
       <StatusBar
@@ -15,9 +38,7 @@ const GreenProfileScreen = ({navigation}) => {
       <GreenHeaderComponent Navigation={navigation} />
       <View style={Styles.ProfileContain}>
         <View style={Styles.ProfileImageContain}>
-          <Text style={Styles.ProfileCompanyName}>
-            Jesika & Sisters Sri Lanka Pvt (Ltd).
-          </Text>
+          <Text style={Styles.ProfileCompanyName}>{companyName}</Text>
           <Image
             style={Styles.ProfileImage}
             source={require('../../assets/icons/company-owner.png')}
@@ -30,7 +51,7 @@ const GreenProfileScreen = ({navigation}) => {
               source={require('../../assets/icons/businessman.png')}
             />
           </View>
-          <Text style={Styles.ProfileText}>Jesika Mathive</Text>
+          <Text style={Styles.ProfileText}>{ownerName}</Text>
         </View>
         <View style={Styles.ProfileCard}>
           <View style={Styles.ProfileIconContain}>
@@ -39,7 +60,7 @@ const GreenProfileScreen = ({navigation}) => {
               source={require('../../assets/icons/email.png')}
             />
           </View>
-          <Text style={Styles.ProfileText}>jesika@gmail.com</Text>
+          <Text style={Styles.ProfileText}>{email}</Text>
         </View>
         <View style={Styles.ProfileCard}>
           <View style={Styles.ProfileIconContain}>
@@ -48,9 +69,7 @@ const GreenProfileScreen = ({navigation}) => {
               source={require('../../assets/icons/address.png')}
             />
           </View>
-          <Text style={Styles.ProfileText}>
-            No 155, Gregory Road, Colombo 11.
-          </Text>
+          <Text style={Styles.ProfileText}>{address}</Text>
         </View>
         <View style={Styles.ProfileButtonContain}>
           <TouchableOpacity

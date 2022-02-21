@@ -10,20 +10,8 @@ const NotificationScreen = ({navigation}) => {
         <View style={Styles.NotificationBody}>
           <View style={Styles.NotificationCard}>
             <Text style={Styles.NotificationText1}>
-              Please add your vehicle details to calculate GHG emissions on your
-              vehicle.
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('AddVehicleScreen')}
-              style={Styles.NotifiButton}>
-              <Text style={Styles.NotifiButtonText}>Add Vehicle Details</Text>
-            </TouchableOpacity>
-            <Text style={Styles.NotificationText2}>Jan 01, 2022, 18:55</Text>
-          </View>
-          <View style={Styles.NotificationCard}>
-            <Text style={Styles.NotificationText1}>
               Please scan your vehicle's odometer to identify the driving
-              distance to calculate GHG emissions on your vehicle.
+              distance.
             </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('ScanScreen')}

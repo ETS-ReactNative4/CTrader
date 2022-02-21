@@ -70,6 +70,7 @@ const TabNavigation = () => {
         component={NotificationScreen}
         options={{
           tabBarLabel: 'Notification',
+          tabBarBadge: 1,
           tabBarActiveTintColor: '#009e60',
           tabBarLabelStyle: {
             fontSize: 12,

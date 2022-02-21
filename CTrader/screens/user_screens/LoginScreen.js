@@ -57,7 +57,7 @@ const LoginScreen = ({navigation}) => {
           <Text style={Styles.Text1}>Welcome!</Text>
         </View>
       </ImageBackground>
-      <View style={Styles.Form}>
+      <View style={Styles.Form1}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={Styles.InputFieldContain}>
             <View style={Styles.Input}>

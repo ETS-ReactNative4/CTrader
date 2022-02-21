@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View, Image, TouchableOpacity} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 
@@ -9,9 +9,27 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontistoIcons from 'react-native-vector-icons/Fontisto';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
 import {AuthContext} from '../../navigation/user_navigations/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
 
 const DrawerContentComponent = props => {
-  const {logout} = useContext(AuthContext);
+  const {logout, user} = useContext(AuthContext);
+
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [imagePath, setImagePath] = useState('');
+
+  firestore()
+    .collection('users')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        var userdata = documentSnapshot.data();
+        setFullName(userdata.fullName);
+        setImagePath(userdata.profileImage);
+        setEmail(userdata.email);
+      }
+    });
 
   return (
     <View style={Styles.Container}>
@@ -29,13 +47,17 @@ const DrawerContentComponent = props => {
           />
         </TouchableOpacity>
         <View style={Styles.DrawerHeader}>
-          <Image
-            style={Styles.DrawerImg}
-            source={require('../../assets/user/user.jpg')}
-          />
+          {!imagePath ? (
+            <Image
+              style={Styles.DrawerImg}
+              source={require('../../assets/user/userTemp.jpg')}
+            />
+          ) : (
+            <Image style={Styles.DrawerImg} source={{uri: imagePath}} />
+          )}
           <View style={Styles.DrawerTextContain}>
-            <Text style={Styles.DrawerText3}>John Makathi</Text>
-            <Text style={Styles.DrawerText1}>john@gmail.com</Text>
+            <Text style={Styles.DrawerText3}>{fullName}</Text>
+            <Text style={Styles.DrawerText1}>{email}</Text>
           </View>
         </View>
         <View style={Styles.DrawerTitle}>

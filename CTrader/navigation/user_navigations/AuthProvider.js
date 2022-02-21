@@ -18,16 +18,6 @@ export const AuthProvider = ({children}) => {
             Alert.alert('Please Enter the Registered Email & Password.');
           }
         },
-        register: async (email, password) => {
-          let newEmail = 'user_' + email;
-          try {
-            await auth().createUserWithEmailAndPassword(newEmail, password);
-          } catch (e) {
-            Alert.alert(
-              'Something went wrong, Please check enterd Email & Password.',
-            );
-          }
-        },
         logout: async () => {
           try {
             await auth().signOut();

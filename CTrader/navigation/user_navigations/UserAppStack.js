@@ -7,7 +7,6 @@ import CheckOutScreen from '../../screens/user_screens/CheckOutScreen';
 import ProfilePictureUpdateScreen from '../../screens/user_screens/ProfilePictureUpdateScreen';
 import ProfileDetailsUpdateScreen from '../../screens/user_screens/ProfileDetailsUpdateScreen';
 import UpdatePasswordScreen from '../../screens/user_screens/UpdatePasswordScreen';
-import AddVehicleScreen from '../../screens/user_screens/AddVehicleScreen';
 import UpdateVehicleScreen from '../../screens/user_screens/UpdateVehicleScreen';
 import ScanScreen from '../../screens/user_screens/ScanScreen';
 import ProfileScreen from '../../screens/user_screens/ProfileScreen';
@@ -43,7 +42,6 @@ const UserAppStack = () => {
         name="UpdatePasswordScreen"
         component={UpdatePasswordScreen}
       />
-      <Stack.Screen name="AddVehicleScreen" component={AddVehicleScreen} />
       <Stack.Screen
         name="UpdateVehicleScreen"
         component={UpdateVehicleScreen}

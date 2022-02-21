@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,32 @@ import Styles from '../../components/green_project_components/ProjectStyleCompon
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5Icons from 'react-native-vector-icons/FontAwesome5';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
+
+import {AuthContext} from '../../navigation/green_project_navigations/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
 const GreenProjectScreen = ({navigation}) => {
+  const {user} = useContext(AuthContext);
+  const [projectName, setProjectName] = useState('');
+  const [creditsAmount, setCreditsAmount] = useState('');
+  const [creditPrice, setCreditPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [projImage, setProjImage] = useState('');
+
+  firestore()
+    .collection('green_projects')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        var userdata = documentSnapshot.data();
+        setProjectName(userdata.projectName);
+        setCreditPrice(userdata.creditPrice);
+        setCreditsAmount(userdata.creditsAmount);
+        setDescription(userdata.description);
+        setProjImage(userdata.projImage);
+      }
+    });
+
   return (
     <View style={Styles.Container}>
       <StatusBar
@@ -24,10 +49,14 @@ const GreenProjectScreen = ({navigation}) => {
       <GreenHeaderComponent Navigation={navigation} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={Styles.ProjectImageBack}>
-          <Image
-            style={Styles.ProjectImage}
-            source={require('../../assets/wind.jpg')}
-          />
+          {projImage != '' ? (
+            <Image style={Styles.ProjectImage} source={{uri: projImage}} />
+          ) : (
+            <Image
+              style={Styles.ProjectImage}
+              source={require('../../assets/project.jpg')}
+            />
+          )}
           <TouchableOpacity
             style={Styles.ProjectImageCamerIcon}
             onPress={() => navigation.navigate('GreenUpdateProjectImgScreen')}>
@@ -37,7 +66,7 @@ const GreenProjectScreen = ({navigation}) => {
         <View style={Styles.ProjectDetailBody}>
           <View>
             <View style={Styles.ProjectDetailTopicCon}>
-              <Text style={Styles.ProjectDetailText1}>Hybro Power Plant</Text>
+              <Text style={Styles.ProjectDetailText1}>{projectName}</Text>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('GreenUpdateProjectInfoScreen')
@@ -53,7 +82,7 @@ const GreenProjectScreen = ({navigation}) => {
                 style={Styles.ProjectDetailInfoIcon}
               />
               <View style={Styles.ProjectDetailInfoContain}>
-                <Text style={Styles.ProjectDetailText4}>$ 5 </Text>
+                <Text style={Styles.ProjectDetailText4}>$ {creditPrice} </Text>
                 <Text style={Styles.ProjectDetailText2}>Per Carbon Tonne</Text>
               </View>
             </View>
@@ -65,26 +94,16 @@ const GreenProjectScreen = ({navigation}) => {
                 style={Styles.ProjectDetailInfoIcon}
               />
               <View style={Styles.ProjectDetailInfoContain}>
-                <Text style={Styles.ProjectDetailText4}>120 tonne(s) </Text>
-                <Text style={Styles.ProjectDetailText2}>Available</Text>
+                <Text style={Styles.ProjectDetailText4}>
+                  {creditsAmount} tonne(s)
+                </Text>
+                <Text style={Styles.ProjectDetailText2}> Available</Text>
               </View>
             </View>
           </View>
           <View>
             <Text style={Styles.ProjectDetailText3}>Description</Text>
-            <Text style={Styles.ProjectDetailDes}>
-              The aim of this project is to reduce nitrous oxide (N2O) emissions
-              in the tail gas of the nitric acid plant of Pakarab Fertilizer
-              Ltd. N2O is an undesired by-product in the production process of
-              nitric acid, which was normally released to the atmosphere. To
-              avoid this, the plant has been retrofitted with a tertiary N2O
-              abatement unit in the tail gas stream. The unit reduces the vast
-              majority of N2O at the source, before it would be released to the
-              atmosphere. Other project benefits include the preservation of the
-              ozone layer and helping spread green technology worldwide: Before
-              the existence of the Kyoto Protocol there was no worldwide
-              regulation of N2O emissions from the nitric acid industry.
-            </Text>
+            <Text style={Styles.ProjectDetailDes}>{description}</Text>
           </View>
         </View>
       </ScrollView>

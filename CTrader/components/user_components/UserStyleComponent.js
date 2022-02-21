@@ -77,6 +77,17 @@ const Styles = StyleSheet.create({
     width: width,
     height: height / 1.75,
   },
+  BackgroundImage1: {
+    flex: 1,
+    width: width,
+    height: height / 2,
+  },
+  BackgroundColor1: {
+    backgroundColor: 'rgba(0, 0, 0, .5)',
+    justifyContent: 'center',
+    width: width,
+    height: height / 2,
+  },
   Logo: {
     alignSelf: 'center',
     tintColor: '#fff',
@@ -85,6 +96,13 @@ const Styles = StyleSheet.create({
   },
   Form: {
     flex: 1.1,
+    backgroundColor: '#fff',
+    width: width,
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
+    padding: 25,
+  },
+  Form1: {
     backgroundColor: '#fff',
     width: width,
     borderTopRightRadius: 40,
@@ -102,7 +120,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5,
-    marginBottom: 15,
+    marginBottom: 10,
     width: width / 1.15,
   },
   InputField: {
@@ -110,6 +128,14 @@ const Styles = StyleSheet.create({
     marginLeft: 15,
     fontSize: 18,
     fontFamily: 'NunitoSans-Regular',
+  },
+  InputFieldText: {
+    width: width / 1.5,
+    marginLeft: 15,
+    fontSize: 20,
+    color: '#009e60',
+    fontFamily: 'NunitoSans-Regular',
+    padding: 10,
   },
   Bottom: {
     flexDirection: 'row',
@@ -161,6 +187,56 @@ const Styles = StyleSheet.create({
   Text3: {
     fontSize: 18,
     fontFamily: 'NunitoSans-Regular',
+  },
+  Text4: {
+    color: '#fff',
+    fontSize: 36,
+    fontFamily: 'PlayfairDisplay-Black',
+    padding: 25,
+    marginBottom: 45,
+  },
+  DropInput: {
+    flexDirection: 'row',
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,158,96,0.2)',
+    alignItems: 'center',
+    padding: 5,
+    marginBottom: 15,
+    width: width / 1.15,
+    height: 55,
+    paddingLeft: 22,
+  },
+  DropDownMenu: {paddingLeft: 20},
+  DropDownText: {
+    color: '#009e60',
+    fontSize: 18,
+    fontFamily: 'NunitoSans-Regular',
+  },
+  DropDownOption: {
+    width: width / 1.4,
+  },
+  DropDownOptionText: {
+    paddingLeft: 20,
+    color: '#009e60',
+    fontSize: 18,
+    fontFamily: 'NunitoSans-Regular',
+  },
+  InputContainerSignUp: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 3,
+    paddingRight: 3,
+  },
+  ScrollDotsContain: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginTop: -5,
+    marginBottom: 5,
+  },
+  ScrollDot: {
+    height: 10,
+    borderRadius: 50,
+    margin: 5,
   },
   // SignUp, SignIn, ForgetPassword, VerfyEmail & NewPassword Screens Styles
   //Header Styles
@@ -282,6 +358,7 @@ const Styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 20,
     paddingRight: 20,
+    marginBottom: 100,
   },
   ProjectCard: {
     justifyContent: 'center',
@@ -341,25 +418,38 @@ const Styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Bold',
     textAlign: 'center',
   },
+  ProjectText4: {
+    color: '#009e60',
+    fontSize: 26,
+    fontFamily: 'NunitoSans-Bold',
+    textAlign: 'center',
+    paddingBottom: 20,
+  },
+  ProjectLoading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   //GreenProject Styles
   //GreenProjectDetail Styles
   ProjectDetailImage: {
-    flex: 1,
+    flex: 1.5,
     width: width,
-    height: height / 4,
+    height: height * 0.3,
   },
   ProjectDetailImageBack: {
     backgroundColor: 'rgba(0, 0, 0, .3)',
     justifyContent: 'center',
     width: width,
-    height: height / 4,
+    height: height * 0.3,
   },
   BacklHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginLeft: 25,
-    marginRight: 25,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: -30,
   },
   BackIconContainer: {
     marginBottom: 60,
@@ -792,9 +882,14 @@ const Styles = StyleSheet.create({
     marginTop: 20,
   },
   ProfileImage: {
-    position: 'relative',
     borderBottomLeftRadius: 250,
-    backgroundColor: 'rgba(0, 0, 0, .5)',
+    width: width,
+    height: height * 0.5,
+  },
+  ProfileBackground: {
+    position: 'absolute',
+    backgroundColor: 'rgba(0, 0, 0, .1)',
+    borderBottomLeftRadius: 250,
     justifyContent: 'center',
     width: width,
     height: height * 0.5,
@@ -833,13 +928,40 @@ const Styles = StyleSheet.create({
   },
   ProfileText2: {
     color: '#009e60',
-    fontSize: 42,
+    fontSize: 32,
     fontFamily: 'PlayfairDisplay-Black',
   },
   ProfileText3: {
     color: '#009e60',
-    fontSize: 26,
+    fontSize: 22,
     fontFamily: 'NunitoSans-Regular',
+  },
+  UpdateBackImage: {
+    flex: 1,
+    width: width,
+    height: height / 2.05,
+  },
+  UpdateProfileImage: {
+    width: width * 0.6,
+    height: height * 0.4,
+    borderRadius: 10,
+  },
+  ActionButton: {
+    paddingLeft: 315,
+    paddingTop: 300,
+  },
+  ActionButton1: {
+    paddingLeft: 375,
+    paddingTop: 290,
+  },
+  ActionButton2: {
+    paddingLeft: 300,
+    paddingTop: 320,
+  },
+  ActionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
   },
   //Profile Screens Styles
   //Vehicle Screeen Styles

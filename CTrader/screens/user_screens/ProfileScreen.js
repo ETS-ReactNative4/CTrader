@@ -1,8 +1,28 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, Image, StatusBar, TouchableOpacity} from 'react-native';
 import Styles from '../../components/user_components/UserStyleComponent';
 import IoniconsIcons from 'react-native-vector-icons/Ionicons';
+import {AuthContext} from '../../navigation/user_navigations/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
 const ProfileScreen = ({navigation}) => {
+  const {user} = useContext(AuthContext);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [imagePath, setImagePath] = useState('');
+
+  firestore()
+    .collection('users')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        var userdata = documentSnapshot.data();
+        setFullName(userdata.fullName);
+        setImagePath(userdata.profileImage);
+        setEmail(userdata.email);
+      }
+    });
+
   return (
     <View style={Styles.ProfileContainer}>
       <StatusBar
@@ -11,11 +31,20 @@ const ProfileScreen = ({navigation}) => {
         barStyle={'light-content'}
         translucent={true}
       />
-      <Image
-        source={require('../../assets/user/user.jpg')}
-        resizeMode="cover"
-        style={Styles.ProfileImage}
-      />
+      {!imagePath ? (
+        <Image
+          source={require('../../assets/user/userTemp.jpg')}
+          resizeMode="cover"
+          style={Styles.ProfileImage}
+        />
+      ) : (
+        <Image
+          source={{uri: imagePath}}
+          resizeMode="cover"
+          style={Styles.ProfileImage}
+        />
+      )}
+      <View style={Styles.ProfileBackground} />
       <TouchableOpacity
         style={Styles.ProfileBackIcon1}
         onPress={() => navigation.goBack()}>
@@ -27,8 +56,8 @@ const ProfileScreen = ({navigation}) => {
         />
       </TouchableOpacity>
       <View style={Styles.ProfileTextContainer}>
-        <Text style={Styles.ProfileText2}>John Makathi</Text>
-        <Text style={Styles.ProfileText3}>jihn@gmail.com</Text>
+        <Text style={Styles.ProfileText2}>{fullName}</Text>
+        <Text style={Styles.ProfileText3}>{email}</Text>
       </View>
       <View style={Styles.ProfileButtonContain}>
         <View style={Styles.ProfileButtomTwo}>

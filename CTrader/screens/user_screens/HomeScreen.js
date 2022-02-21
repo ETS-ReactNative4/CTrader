@@ -1,9 +1,26 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, Image, StatusBar, TouchableOpacity} from 'react-native';
 import Styles from '../../components/user_components/UserStyleComponent';
 import {AuthContext} from '../../navigation/user_navigations/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
 const HomeScreen = ({navigation}) => {
   const {user} = useContext(AuthContext);
+  const [fullName, setFullName] = useState('');
+  const [imagePath, setImagePath] = useState('');
+
+  firestore()
+    .collection('users')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        var userdata = documentSnapshot.data();
+        var firstName = userdata.fullName.split(' ')[0];
+        setFullName(firstName);
+        setImagePath(userdata.profileImage);
+      }
+    });
+
   return (
     <View style={Styles.Container1}>
       <StatusBar
@@ -26,17 +43,20 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View style={Styles.HomeHeaderMiddle}>
         <View>
-          <Text style={Styles.HomeText1}>Hello Jessica, </Text>
-          {/* <Text style={Styles.HomeText2}>{user.uid}</Text> */}
+          <Text style={Styles.HomeText1}>Hello {fullName}, </Text>
           <Text style={Styles.HomeText2}>
             Do you want to know you GHG emissons?
           </Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
-          <Image
-            style={Styles.HomeUser}
-            source={require('../../assets/user/user.jpg')}
-          />
+          {!imagePath ? (
+            <Image
+              style={Styles.HomeUser}
+              source={require('../../assets/user/userTemp.jpg')}
+            />
+          ) : (
+            <Image style={Styles.HomeUser} source={{uri: imagePath}} />
+          )}
         </TouchableOpacity>
       </View>
       <View style={Styles.HomeMainIconContain}>

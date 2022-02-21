@@ -1,10 +1,26 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, StatusBar, Image} from 'react-native';
 import GreenHeaderComponent from '../../components/green_project_components/GreenHeaderComponent';
 import Styles from '../../components/green_project_components/ProjectStyleComponent';
+
 import {AuthContext} from '../../navigation/green_project_navigations/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
 const GreenHomeScreen = ({navigation}) => {
   const {user} = useContext(AuthContext);
+  const [ownerName, setOwnerName] = useState('');
+
+  firestore()
+    .collection('green_projects')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        var userdata = documentSnapshot.data();
+        var firstName = userdata.ownerName.split(' ')[0];
+        setOwnerName(firstName);
+      }
+    });
+
   return (
     <View style={Styles.Container1}>
       <StatusBar
@@ -15,7 +31,7 @@ const GreenHomeScreen = ({navigation}) => {
       />
       <GreenHeaderComponent Navigation={navigation} />
       <View style={Styles.HomeUserName}>
-        <Text style={Styles.HomeText1}>Hello {user.id},</Text>
+        <Text style={Styles.HomeText1}>Hello {ownerName},</Text>
         <Text style={Styles.HomeText2}>
           Do you want to know your current status?
         </Text>
