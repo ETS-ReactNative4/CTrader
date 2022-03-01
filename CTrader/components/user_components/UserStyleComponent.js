@@ -352,6 +352,11 @@ const Styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'NunitoSans-Regular',
   },
+  HomeText5: {
+    color: '#5e5e5e',
+    fontSize: 18,
+    fontFamily: 'NunitoSans-Regular',
+  },
   //Home Styles
   //GreenProject Styles
   ProjectBody: {
@@ -649,6 +654,14 @@ const Styles = StyleSheet.create({
     shadowOpacity: 0.4,
     elevation: 5,
   },
+  CartItem1: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 25,
+    shadowColor: 'black',
+    shadowOpacity: 0.4,
+    elevation: 5,
+  },
   ProjectImg: {
     height: 70,
     width: 70,
@@ -723,6 +736,39 @@ const Styles = StyleSheet.create({
     fontFamily: 'NunitoSans-Black',
     textAlign: 'center',
   },
+  CartText6: {
+    color: '#ea3c53',
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'NunitoSans-Black',
+  },
+  CountBack: {
+    position: 'absolute',
+    backgroundColor: '#eb0000',
+    width: 22,
+    height: 22,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: '-30%',
+    bottom: '80%',
+  },
+  CountBack1: {
+    position: 'absolute',
+    backgroundColor: '#eb0000',
+    width: 22,
+    height: 22,
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: '-35%',
+    bottom: '20%',
+  },
+  CountText: {
+    color: '#fff',
+    fontFamily: 'NunitoSans-Black',
+    fontSize: 14,
+  },
   //Cart Styles
   //CheckOut Styles
   CheckOuttBody: {
@@ -742,11 +788,20 @@ const Styles = StyleSheet.create({
   },
   PaymentImgContainer: {
     backgroundColor: '#fff',
-    padding: 10,
+    padding: 8,
     borderRadius: 10,
     shadowColor: 'black',
     shadowOpacity: 0.4,
     elevation: 5,
+    borderWidth: 3,
+    borderColor: '#fff',
+  },
+  PaymentImgContainer1: {
+    backgroundColor: '#fff',
+    padding: 8,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: 'rgb(0,158,96)',
   },
   PaymentImg: {
     width: 50,
@@ -773,9 +828,10 @@ const Styles = StyleSheet.create({
     elevation: 5,
   },
   CheckOutTextInput: {
-    color: '#009e60',
+    color: '#000',
     fontSize: 18,
     fontFamily: 'NunitoSans-Regular',
+    paddingLeft: 30,
   },
   CheckOutInputContainer1: {
     flexDirection: 'row',
@@ -784,10 +840,11 @@ const Styles = StyleSheet.create({
     marginTop: 10,
   },
   CheckOutTextInput1: {
-    color: '#009e60',
+    color: '#000',
     fontSize: 16,
     fontFamily: 'NunitoSans-Regular',
     width: width * 0.4,
+    paddingLeft: 30,
   },
   CheckOutText1: {
     color: '#000',

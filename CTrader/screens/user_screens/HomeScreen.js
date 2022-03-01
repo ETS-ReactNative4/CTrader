@@ -7,6 +7,8 @@ const HomeScreen = ({navigation}) => {
   const {user} = useContext(AuthContext);
   const [fullName, setFullName] = useState('');
   const [imagePath, setImagePath] = useState('');
+  const [totPayment, setTotPayment] = useState('');
+  const [totCredits, setTotCredits] = useState('');
 
   firestore()
     .collection('users')
@@ -18,6 +20,17 @@ const HomeScreen = ({navigation}) => {
         var firstName = userdata.fullName.split(' ')[0];
         setFullName(firstName);
         setImagePath(userdata.profileImage);
+      }
+    });
+
+  firestore()
+    .collection('user_summery')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        setTotPayment(documentSnapshot.data().totalPrice);
+        setTotCredits(documentSnapshot.data().totalPerchasedCredit);
       }
     });
 
@@ -86,7 +99,7 @@ const HomeScreen = ({navigation}) => {
             />
           </View>
           <View style={Styles.HomeCardDetails}>
-            <Text style={Styles.HomeText3}>$ 255</Text>
+            <Text style={Styles.HomeText3}>$ {totPayment}</Text>
             <Text style={Styles.HomeText4}>Total Purchasing</Text>
           </View>
         </View>
@@ -98,7 +111,7 @@ const HomeScreen = ({navigation}) => {
             />
           </View>
           <View style={Styles.HomeCardDetails}>
-            <Text style={Styles.HomeText3}>100 tonne(s)</Text>
+            <Text style={Styles.HomeText3}>{totCredits} tonne(s)</Text>
             <Text style={Styles.HomeText4}>Total GHG Emissions</Text>
           </View>
         </View>

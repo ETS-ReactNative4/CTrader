@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   Text,
   View,
@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import Styles from '../../components/user_components/UserStyleComponent';
 import IoniconsIcons from 'react-native-vector-icons/Ionicons';
@@ -16,10 +17,17 @@ import IMaterialIconsIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5Icons from 'react-native-vector-icons/FontAwesome5';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
 import firestore from '@react-native-firebase/firestore';
+import {AuthContext} from '../../navigation/user_navigations/AuthProvider';
 
 const GreenProjectDetailScreeen = ({navigation, route}) => {
+  const {user} = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [projectDetail, setProjectDetail] = useState([]);
+  const [creditAmount, setCreditAmount] = useState('');
+  const [projects, setProjects] = useState([]);
+
+  const d = new Date();
+  const date = d.getDate() + '/' + d.getDay() + '/' + d.getFullYear();
 
   useEffect(() => {
     firestore()
@@ -32,7 +40,83 @@ const GreenProjectDetailScreeen = ({navigation, route}) => {
         }
         setLoading(false);
       });
+    firestore()
+      .collection('cart')
+      .where('userId', '==', user.uid)
+      .where('date', '==', date)
+      .onSnapshot(querySnapshot => {
+        const projects = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+          projects.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setProjects(projects);
+      });
+    return () => {
+      setCreditAmount(null);
+    };
   }, []);
+
+  const newCreditsAmount = projectDetail.creditsAmount - creditAmount;
+
+  const reduseCredits = async () => {
+    await firestore()
+      .collection('green_projects')
+      .doc(projectDetail.userId)
+      .update({
+        creditsAmount: newCreditsAmount,
+      })
+      .then(() => {
+        console.log('Project Credit Amount Reduced!');
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
+
+  const price = creditAmount * projectDetail.creditPrice;
+
+  const submitData = async () => {
+    reduseCredits();
+    await firestore()
+      .collection('cart')
+      .add({
+        userId: user.uid,
+        buyingAmount: creditAmount,
+        projectId: projectDetail.userId,
+        projectName: projectDetail.projectName,
+        creditsPrice: projectDetail.creditPrice,
+        projImage: projectDetail.projImage,
+        price: price,
+        date: date,
+      })
+      .then(() => {
+        console.log('Add carbon credits to the cart.');
+        Alert.alert(
+          'Task Completed,',
+          `You are successfully add ${creditAmount} carbon credits to the cart...!`,
+        );
+        setCreditAmount(null);
+      })
+      .catch(error => {
+        console.log(error.message);
+        Alert.alert(
+          'Error..!',
+          'Something went wrong with add cart to firestore.',
+        );
+      });
+  };
+  const addCart = () => {
+    if (!creditAmount) {
+      Alert.alert('Alert,', 'Please Enter the Credit Amout...!');
+    } else {
+      submitData();
+    }
+  };
 
   return (
     <View style={Styles.Container}>
@@ -82,6 +166,11 @@ const GreenProjectDetailScreeen = ({navigation, route}) => {
                     size={30}
                     style={Styles.BackIcon}
                   />
+                  {projects.length != 0 ? (
+                    <View style={Styles.CountBack}>
+                      <Text style={Styles.CountText}>{projects.length}</Text>
+                    </View>
+                  ) : null}
                 </TouchableOpacity>
               </View>
             </View>
@@ -153,11 +242,15 @@ const GreenProjectDetailScreeen = ({navigation, route}) => {
                   placeholder="1"
                   placeholderTextColor={'rgb(0,158,96)'}
                   style={Styles.ProjectDetailTextInput}
+                  value={creditAmount}
+                  onChangeText={userCredits => setCreditAmount(userCredits)}
                 />
               </View>
               <Text style={Styles.ProjectDetailText4}>tonne(s)</Text>
             </View>
-            <TouchableOpacity style={Styles.ProjectDetailButton}>
+            <TouchableOpacity
+              onPress={() => addCart()}
+              style={Styles.ProjectDetailButton}>
               <Text style={Styles.ProjectDetailButtonText}>Add To Cart</Text>
             </TouchableOpacity>
           </View>
