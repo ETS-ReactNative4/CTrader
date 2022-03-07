@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, Text, StatusBar, Image} from 'react-native';
 import GreenHeaderComponent from '../../components/green_project_components/GreenHeaderComponent';
 import Styles from '../../components/green_project_components/ProjectStyleComponent';
@@ -8,6 +8,9 @@ import firestore from '@react-native-firebase/firestore';
 const GreenHomeScreen = ({navigation}) => {
   const {user} = useContext(AuthContext);
   const [ownerName, setOwnerName] = useState('');
+  const [currentCredits, setCurrentCredits] = useState('');
+  const [totPayment, setTotPayment] = useState('');
+  const [totCredits, setTotCredits] = useState('');
 
   firestore()
     .collection('green_projects')
@@ -18,8 +21,29 @@ const GreenHomeScreen = ({navigation}) => {
         var userdata = documentSnapshot.data();
         var firstName = userdata.ownerName.split(' ')[0];
         setOwnerName(firstName);
+        setCurrentCredits(userdata.creditsAmount);
       }
     });
+
+  firestore()
+    .collection('green_project_summery')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        setTotPayment(documentSnapshot.data().totalPrice);
+        setTotCredits(documentSnapshot.data().totalPerchasedCredit);
+      }
+    });
+
+  useEffect(() => {
+    return () => {
+      setOwnerName(null);
+      setCurrentCredits(null);
+      setTotPayment(null);
+      setTotCredits(null);
+    };
+  }, []);
 
   return (
     <View style={Styles.Container1}>
@@ -51,7 +75,7 @@ const GreenHomeScreen = ({navigation}) => {
             />
           </View>
           <View style={Styles.HomeCardDetails}>
-            <Text style={Styles.HomeText3}>500 tonne(s)</Text>
+            <Text style={Styles.HomeText3}>{totCredits} tonne(s)</Text>
             <Text style={Styles.HomeText4}>Total Sold Carbon Credits.</Text>
           </View>
         </View>
@@ -63,7 +87,7 @@ const GreenHomeScreen = ({navigation}) => {
             />
           </View>
           <View style={Styles.HomeCardDetails}>
-            <Text style={Styles.HomeText3}>$ 2000</Text>
+            <Text style={Styles.HomeText3}>$ {totPayment}</Text>
             <Text style={Styles.HomeText4}>
               Total Earning From Carbon Credits. .
             </Text>
@@ -77,7 +101,7 @@ const GreenHomeScreen = ({navigation}) => {
             />
           </View>
           <View style={Styles.HomeCardDetails}>
-            <Text style={Styles.HomeText3}>100 tonne(s)</Text>
+            <Text style={Styles.HomeText3}>{currentCredits} tonne(s)</Text>
             <Text style={Styles.HomeText4}>Now Avaliable Carbon Credits.</Text>
           </View>
         </View>
