@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import Styles from '../components/StyleComponent';
 import HeaderComponent from '../components/HeaderComponent';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import IoniconsIcons from 'react-native-vector-icons/Ionicons';
+import auth from '@react-native-firebase/auth';
 const UpdatePasswordScreen = ({navigation}) => {
   const [newPassword, setNewPassword] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -32,19 +33,59 @@ const UpdatePasswordScreen = ({navigation}) => {
   const showPassword3 = () => {
     setSecureTextEntry3(!secureTextEntry3);
   };
-  const loginCheck = () => {
+
+  const reauthenticate = currentPassword => {
+    var user1 = auth().currentUser;
+    var cred = auth.EmailAuthProvider.credential(user1.email, currentPassword);
+    return user1.reauthenticateWithCredential(cred);
+  };
+
+  const onChangePasswordPress = () => {
+    reauthenticate(currentPassword)
+      .then(() => {
+        var user1 = auth().currentUser;
+        user1
+          .updatePassword(newPassword)
+          .then(() => {
+            console.log('Password updated..!');
+            Alert.alert(
+              'Updated,',
+              'Your password has been updated Successfully...!',
+            );
+            setCurrentPassword(null);
+            setNewPassword(null);
+            setConfirmPassword(null);
+          })
+          .catch(error => {
+            console.log(error.message);
+          });
+      })
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
+
+  useEffect(() => {
+    return () => {
+      setCurrentPassword(null);
+      setNewPassword(null);
+      setConfirmPassword(null);
+    };
+  }, []);
+  const changePassword = () => {
     if (!currentPassword) {
-      Alert.alert('Please Enter your Current Password..!');
+      Alert.alert('Alert', 'Please Enter your Current Password..!');
     } else if (!newPassword) {
-      Alert.alert('Please Enter your New Password..!');
+      Alert.alert('Alert', 'Please Enter your New Password..!');
     } else if (!confirmPassword) {
-      Alert.alert('Please Enter your Confirm Password..!');
-    } else if (newPassword === confirmPassword) {
+      Alert.alert('Alert', 'Please Enter your Confirm Password..!');
+    } else if (newPassword != confirmPassword) {
       Alert.alert(
+        'Alert',
         'Entered New Password & Confirm Pasword are not same. Please Check Again..!',
       );
     } else {
-      Alert.alert('Done');
+      onChangePasswordPress();
     }
   };
   return (
@@ -129,7 +170,7 @@ const UpdatePasswordScreen = ({navigation}) => {
           </View>
           <TouchableOpacity
             style={Styles.LandingButton}
-            onPress={() => navigation.navigate('HomeScreen')}>
+            onPress={() => changePassword()}>
             <Text style={Styles.LandingButtonText}>Update Now</Text>
           </TouchableOpacity>
         </View>

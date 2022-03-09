@@ -38,6 +38,9 @@ const Styles = StyleSheet.create({
   TextColor: {
     color: '#009e60',
   },
+  LandingButtonTop: {
+    paddingTop: '10%',
+  },
   LandingButton: {
     backgroundColor: 'rgb(0,158,96)',
     padding: '4%',
@@ -139,12 +142,31 @@ const Styles = StyleSheet.create({
     padding: '3%',
     backgroundColor: '#009e60',
     borderRadius: 15,
+    height: height * 0.12,
+  },
+  HomeHeaderMiddle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingRight: '5%',
+    paddingTop: '1%',
   },
   Logo: {
     tintColor: '#fff',
     width: '40%',
     height: '90%',
   },
+  HomeLogOut: {
+    width: 50,
+    height: 50,
+    tintColor: '#fff',
+  },
+  HomeBodyTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  HomeBodyTopLeft: {paddingRight: '32%'},
   UserImg: {
     width: 60,
     height: 60,
@@ -227,6 +249,7 @@ const Styles = StyleSheet.create({
   // Admin & Users & Requests & Projects List Styles
   ListCardContain: {
     padding: '4%',
+    marginBottom: '20%',
   },
   ListCard: {
     flexDirection: 'row',
@@ -238,7 +261,21 @@ const Styles = StyleSheet.create({
     shadowOpacity: 0.4,
     elevation: 5,
     borderRadius: 15,
-    marginBottom: '4%',
+    marginTop: '1%',
+    marginBottom: '3%',
+    marginRight: '1%',
+    marginLeft: '1%',
+  },
+  ListCard1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '5%',
+    backgroundColor: '#fff',
+    shadowColor: 'black',
+    shadowOpacity: 0.4,
+    elevation: 5,
+    borderRadius: 15,
   },
   ListCardTop: {
     padding: '4%',
@@ -247,7 +284,10 @@ const Styles = StyleSheet.create({
     shadowOpacity: 0.4,
     elevation: 5,
     borderRadius: 15,
-    marginBottom: '4%',
+    marginTop: '1%',
+    marginBottom: '3%',
+    marginRight: '1%',
+    marginLeft: '1%',
   },
   ListCardBottom: {
     flexDirection: 'row',
@@ -263,6 +303,7 @@ const Styles = StyleSheet.create({
   },
   ListTextContain: {
     paddingLeft: '5%',
+    width: width * 0.55,
   },
   ListTextDes: {
     flexDirection: 'row',
@@ -291,6 +332,12 @@ const Styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'NunitoSans-Bold',
     lineHeight: 25,
+  },
+  ListText5: {
+    color: '#ef3038',
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'NunitoSans-Black',
   },
   ListCardView: {
     flexDirection: 'row',
@@ -432,7 +479,19 @@ const Styles = StyleSheet.create({
     fontSize: 22,
     paddingTop: 15,
     fontFamily: 'NunitoSans-Black',
-    paddingBottom: 5,
+    paddingBottom: '3%',
+  },
+  ProjectDetailText4: {
+    color: '#009e60',
+    fontSize: 26,
+    fontFamily: 'NunitoSans-Bold',
+    textAlign: 'center',
+    paddingBottom: '10%',
+  },
+  ProjectLoading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   RedButton: {backgroundColor: '#fa8072'},
   GreenButton: {backgroundColor: '#009e60'},

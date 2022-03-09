@@ -26,16 +26,13 @@ const LandingScreen = ({navigation}) => {
         <Text style={Styles.DescriptionText}>
           Approve new green project and Add new green Projects.
         </Text>
-        <TouchableOpacity
-          style={Styles.LandingButton}
-          onPress={() => navigation.navigate('LoginScreen')}>
-          <Text style={Styles.LandingButtonText}>Start Now</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-          <Text style={[Styles.DescriptionText, Styles.TextColor]}>
-            Don't you have account?
-          </Text>
-        </TouchableOpacity>
+        <View style={Styles.LandingButtonTop}>
+          <TouchableOpacity
+            style={Styles.LandingButton}
+            onPress={() => navigation.navigate('AdminLoginScreen')}>
+            <Text style={Styles.LandingButtonText}>Start Now</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

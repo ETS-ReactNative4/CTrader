@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,8 @@ import Styles from '../components/StyleComponent';
 import HeaderComponent from '../components/HeaderComponent';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import IoniconsIcons from 'react-native-vector-icons/Ionicons';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 const UpdateInforScreen = ({navigation}) => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -23,7 +25,68 @@ const UpdateInforScreen = ({navigation}) => {
     setSecureTextEntry1(!secureTextEntry1);
   };
 
-  const loginCheck = () => {
+  const reauthenticate = currentPassword => {
+    var user1 = auth().currentUser;
+    var cred = auth.EmailAuthProvider.credential(user1.email, currentPassword);
+    return user1.reauthenticateWithCredential(cred);
+  };
+
+  const onChangeEmailPress = () => {
+    let emailAddress = 'admin_' + email;
+    reauthenticate(password)
+      .then(() => {
+        var user1 = auth().currentUser;
+        user1
+          .updateEmail(emailAddress)
+          .then(() => {
+            console.log('Email & Name successfully updated...!');
+          })
+          .catch(error => {
+            console.log(error.message);
+            Alert.alert(
+              'Error..!',
+              'Something went wrong with added profile details to firestore.',
+            );
+          });
+      })
+      .catch(error => {
+        console.log(error.message);
+        Alert.alert(
+          'Error..!',
+          'Something went wrong with added profile details to firestore.',
+        );
+      });
+  };
+
+  const submitData = async () => {
+    onChangeEmailPress();
+    await firestore()
+      .collection('admin')
+      .doc(auth().currentUser.uid)
+      .update({
+        userName: userName,
+        email: email,
+      })
+      .then(() => {
+        console.log('User Details Updated!');
+        Alert.alert(
+          'Task Completed,',
+          'Your profile has been successfully updated...!',
+        );
+        setEmail(null);
+        setUserName(null);
+        setPassword(null);
+      })
+      .catch(error => {
+        console.log(error.message);
+        Alert.alert(
+          'Error..!',
+          'Something went wrong with added profile details to firestore.',
+        );
+      });
+  };
+
+  const updateProfile = () => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!userName) {
       Alert.alert('Please Enter your Username..!');
@@ -34,9 +97,18 @@ const UpdateInforScreen = ({navigation}) => {
     } else if (reg.test(email) === false) {
       Alert.alert('Please Enter Vaild Email Address..!');
     } else {
-      Alert.alert('Done');
+      submitData();
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setEmail(null);
+      setUserName(null);
+      setPassword(null);
+    };
+  }, []);
+
   return (
     <View style={Styles.Container}>
       <StatusBar
@@ -99,7 +171,7 @@ const UpdateInforScreen = ({navigation}) => {
           </View>
           <TouchableOpacity
             style={Styles.LandingButton}
-            onPress={() => navigation.navigate('HomeScreen')}>
+            onPress={() => updateProfile()}>
             <Text style={Styles.LandingButtonText}>Update Now</Text>
           </TouchableOpacity>
         </View>

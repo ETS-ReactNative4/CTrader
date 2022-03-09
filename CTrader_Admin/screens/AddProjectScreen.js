@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,9 @@ import FontAwesome5Icons from 'react-native-vector-icons/FontAwesome5';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
 import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 const AddProjectScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +43,58 @@ const AddProjectScreen = ({navigation}) => {
     setSecureTextEntry2(!secureTextEntry2);
   };
 
-  const signinCheck = () => {
+  const submitData = async () => {
+    let newEmail = 'greenProject_' + email;
+    await auth()
+      .createUserWithEmailAndPassword(newEmail, password)
+      .then(res => {
+        firestore()
+          .collection('green_projects')
+          .doc(res.user.uid)
+          .set({
+            userId: res.user.uid,
+            companyName: companyName,
+            ownerName: ownerName,
+            address: address,
+            projectName: projectName,
+            creditsAmount: creditsAmount,
+            creditPrice: creditPrice,
+            description: description,
+            email: email,
+            projImage: '',
+            approve: 'Yes',
+          })
+          .then(() => {
+            console.log('Green Project Added!');
+            Alert.alert(
+              'Task Completed,',
+              'Green Project registration has been successfully completed.',
+            );
+            setCompanyName(null);
+            setOwnerName(null);
+            setAddress(null);
+            setProjectName(null);
+            setCreditsAmount(null);
+            setCreditPrice(null);
+            setDescription(null);
+            setEmail(null);
+            setPassword(null);
+            setConfirmPassword(null);
+          })
+          .catch(error => {
+            console.log(error.message);
+            Alert.alert(
+              'Error..!',
+              'Something went wrong with added profile details to firestore.',
+            );
+          });
+      })
+      .catch(error => {
+        Alert.alert('Error,', 'Something went wrong..!');
+      });
+  };
+
+  const addGreenProject = () => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!companyName) {
       Alert.alert('Alert,', 'You are forget to enter Company Name...!');
@@ -74,9 +128,24 @@ const AddProjectScreen = ({navigation}) => {
         'Your Confirm Password is not match to the Password...!',
       );
     } else {
-      Alert.alert('Alert,', 'Done..!');
+      submitData();
     }
   };
+
+  useEffect(() => {
+    return () => {
+      setCompanyName(null);
+      setOwnerName(null);
+      setAddress(null);
+      setProjectName(null);
+      setCreditsAmount(null);
+      setCreditPrice(null);
+      setDescription(null);
+      setEmail(null);
+      setPassword(null);
+      setConfirmPassword(null);
+    };
+  }, []);
 
   return (
     <View style={Styles.Container}>
@@ -250,7 +319,7 @@ const AddProjectScreen = ({navigation}) => {
       <View style={{alignSelf: 'center'}}>
         <TouchableOpacity
           style={Styles.LandingButton}
-          onPress={() => navigation.navigate('HomeScreen')}>
+          onPress={() => addGreenProject()}>
           <Text style={Styles.LandingButtonText}>Add Now</Text>
         </TouchableOpacity>
       </View>

@@ -1,9 +1,27 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, Image, TouchableOpacity, StatusBar} from 'react-native';
 import HeaderComponent from '../components/HeaderComponent';
 import Styles from '../components/StyleComponent';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome';
+import {AuthContext} from '../navigation/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
 const ProfileScreen = ({navigation}) => {
+  const {user} = useContext(AuthContext);
+  const [adminName, setAdminName] = useState('');
+  const [adminEmail, setAdminEmail] = useState('');
+
+  firestore()
+    .collection('admin')
+    .doc(user.uid)
+    .get()
+    .then(documentSnapshot => {
+      if (documentSnapshot.exists) {
+        var userdata = documentSnapshot.data();
+        setAdminName(userdata.userName);
+        setAdminEmail(userdata.email);
+      }
+    });
+
   return (
     <View style={Styles.Container1}>
       <StatusBar
@@ -25,14 +43,14 @@ const ProfileScreen = ({navigation}) => {
             <FontAwesome5 name="user" size={25} color="#5e5e5e" />
             <View style={Styles.ProfileDesRight}>
               <Text style={Styles.userNameText}>Name</Text>
-              <Text style={Styles.ProfileDesText}>Thimira Madusanka</Text>
+              <Text style={Styles.ProfileDesText}>{adminName}</Text>
             </View>
           </View>
           <View style={Styles.ProfileDes}>
             <FontAwesome5 name="envelope" size={20} color="#5e5e5e" />
             <View style={Styles.ProfileDesRight}>
               <Text style={Styles.userNameText}>Email</Text>
-              <Text style={Styles.ProfileDesText}>thimira@gmail.com</Text>
+              <Text style={Styles.ProfileDesText}>{adminEmail}</Text>
             </View>
           </View>
         </View>
