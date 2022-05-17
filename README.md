@@ -5,15 +5,15 @@ When a country is carbon neutral, it can gain a competitive advantage through th
 Green renewable projects, such as solar and hydro projects, capture or remove the atmospheric CO2 and act as a carbon sink. There are internationally accepted methodologies to calculate greenhouse gas removal on such projects. And also, we can calculate the greenhouse gases emission of individual persons or companies. When becoming carbon neutral, a company or a person can offset their unavoidable GHG emissions by purchasing carbon credits from eligible green projects. A carbon credit is a tradeable license or guarantee that gives the creditor the right to emit one ton of carbon dioxide or the equivalent of another greenhouse gas. For individuals or companies that emit these greenhouse gases, carbon credit buyers can directly deal with carbon credit sellers to acquire carbon credit to become carbon neutral.
 "CTrader" voluntary carbon trading mobile app will bring Sri Lankan green projects that offset the carbon in the environment and Sri Lankan users who are willing to neutralize their carbon emissions to one common application. Through this app, Sri Lankan users can voluntarily fund Sri Lankan green projects and contribute to climate neutrality. Furthermore, the user can calculate his vehicle's greenhouse gas emission and buy carbon credits equal to the calculated value for making climate neutrality by using this app. And also, green project owners can use this application to sell their carbon credits.
 
-## Major goals and objectives
+## Major Goals and Objectives
 - Creating a common platform for both Sri Lankan Green Projects that sinks the carbon in the environment and users who willing to neutralize their GHG emissions.
 - Encouraging the implementation of new green projects in Sri Lanka.
 -	Encouraging people to think about climate neutrality.
 
-## Scope of the project
+## Scope of the Project
 When it comes to GHG emissions, there are several ways of emitting GHGs because of humans' day-to-day activities. Household Electricity Consumption, Electricity Transmission & Distribution, Municipal Water Consumption, Diesel Generators, and vehicles will contribute to carbon emissions. However, we will only consider neutralizing the GHG emission on vehicles' usage through this application. The user can fund the green projects according to the monthly GHG emission of their vehicle by using this app. User, Admin, and Green project owner are the main three characters in this application. Users can create an account, calculate their GHG emissions, and add funds using this app. Green project owners can also create and update projects. Admin can monitor all the actions in this application.
 
-## Main Characters in the project 
+## Main Characters in the Project 
 User, Admin, and Green project owner are the main three characters in this "CTrader" voluntary carbon trading mobile app.
 
 | Character | Description |
